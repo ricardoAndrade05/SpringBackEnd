@@ -20,8 +20,11 @@ public class PedidoResource {
 	@RequestMapping(value ="/{id}",method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id ) {
 		Pedido pedido = service.buscar(id);
-		System.out.println(ResponseEntity.ok().body(pedido));
-		return ResponseEntity.ok().body(pedido);
+		ResponseEntity<Pedido> retorno = ResponseEntity.ok().body(pedido);
+		System.out.println("///////////////////////////////////////////////////////////////////////////////");
+		System.out.println(retorno);
+		System.out.println("///////////////////////////////////////////////////////////////////////////////");
+		return retorno;
 		
 	}
 

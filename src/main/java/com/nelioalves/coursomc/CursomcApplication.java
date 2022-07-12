@@ -13,6 +13,7 @@ import com.nelioalves.coursomc.domain.Cidade;
 import com.nelioalves.coursomc.domain.Cliente;
 import com.nelioalves.coursomc.domain.Endereco;
 import com.nelioalves.coursomc.domain.Estado;
+import com.nelioalves.coursomc.domain.ItemPedido;
 import com.nelioalves.coursomc.domain.Pagamento;
 import com.nelioalves.coursomc.domain.PagamentoComBoleto;
 import com.nelioalves.coursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.nelioalves.coursomc.repositories.CidadeRepository;
 import com.nelioalves.coursomc.repositories.ClienteRepository;
 import com.nelioalves.coursomc.repositories.EnderecoRepository;
 import com.nelioalves.coursomc.repositories.EstadoRepository;
+import com.nelioalves.coursomc.repositories.ItemPedidoRepository;
 import com.nelioalves.coursomc.repositories.PagamentoRepository;
 import com.nelioalves.coursomc.repositories.PedidoRepository;
 import com.nelioalves.coursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	PagamentoRepository pagamentoRepository;
 	@Autowired
 	PedidoRepository pedidoRepository;
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -69,10 +73,7 @@ public class CursomcApplication implements CommandLineRunner {
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
-		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
-		
+
 		Estado est1 = new Estado(null,"Minas Gerais");
 		Estado est2 = new Estado(null,"São Paulo");
 
@@ -82,9 +83,6 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2,c3));
-		
-		estadoRepository.saveAll(Arrays.asList(est1,est2));
-		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
 		Cliente cli = new Cliente(null, "Maria Silva", "Maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		cli.getTelefones().addAll(Arrays.asList("27363323","93838393"));
@@ -101,12 +99,28 @@ public class CursomcApplication implements CommandLineRunner {
 		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
 		ped2.setPagamento(pagto2);
 		cli.getPedidos().addAll(Arrays.asList(ped1,ped2));
+						
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00) ;
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
 		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		estadoRepository.saveAll(Arrays.asList(est1,est2));
+		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		clienteRepository.saveAll(Arrays.asList(cli));
 		enderecoRepository.saveAll(Arrays.asList(end1,end2));
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
-		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		
 	 }
 

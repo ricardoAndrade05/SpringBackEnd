@@ -1,5 +1,6 @@
 package com.nelioalves.coursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possivel exlcuir uma categoria que possui produtos");
 		}
 				
+	}
+	
+	public List<Categoria> buscaTodas(){
+		return repo.findAll();
 	}
 	
 }

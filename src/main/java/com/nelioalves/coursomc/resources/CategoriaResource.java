@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -28,35 +30,37 @@ public class CategoriaResource {
 	
 	@RequestMapping(value ="/{id}",method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id ) {
-		Categoria categoria = service.buscar(id);
+		Categoria categoria = service.find(id);
 		return ResponseEntity.ok().body(categoria);
 		
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
-		obj = service.inserir(obj);
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO){
+		Categoria categoria = service.fromDTO(categoriaDTO);
+		categoria = service.insert(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+				.path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){
-		obj.setId(id);
-		obj = service.atualizar(obj);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO,@PathVariable Integer id){
+		Categoria categoria = service.fromDTO(categoriaDTO);
+		categoria.setId(id);
+		categoria = service.update(categoria);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value ="/{id}",method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id ){
-		service.excluir(id);
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> categorias = service.buscaTodas();
+		List<Categoria> categorias = service.findAll();
 		List<CategoriaDTO> categoriasDTO = categorias.stream()
 				.map(categoria -> new CategoriaDTO(categoria))
 				.collect(Collectors.toList());

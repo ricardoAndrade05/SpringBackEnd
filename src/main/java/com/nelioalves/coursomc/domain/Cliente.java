@@ -31,7 +31,7 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	@OneToMany(mappedBy = "cliente")
-	List<Endereco> enderecos = new ArrayList<>();
+	private List<Endereco> enderecos = new ArrayList<>();
 	
 	/*Foi usado a set/hash pois garante que não haverá elementos repetidos na lista*/
 	@ElementCollection
@@ -52,7 +52,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 	public Integer getId() {

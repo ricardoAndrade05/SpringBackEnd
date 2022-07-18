@@ -44,10 +44,10 @@ public class ClienteService {
 		return repo.save(cliente);
 	}
 
-	public Cliente update(Cliente clienteDTO) {
-		Cliente cliente = find(clienteDTO.getId());
-		updateData(cliente, clienteDTO);
-		return repo.save(cliente);
+	public Cliente update(Cliente clienteDadosAtualizados) {
+		Cliente clienteBanco = find(clienteDadosAtualizados.getId());
+		updateData(clienteBanco, clienteDadosAtualizados);
+		return repo.save(clienteBanco);
 	}
 
 	public void delete(Integer id) {
@@ -91,9 +91,9 @@ public class ClienteService {
 		
 	}
 
-	private void updateData(Cliente cliente, Cliente clienteDTO) {
-		cliente.setNome(clienteDTO.getNome());
-		cliente.setEmail(clienteDTO.getEmail());
+	private void updateData(Cliente clienteBanco, Cliente clienteDadosAtualizados) {
+		clienteBanco.setNome(clienteDadosAtualizados.getNome());
+		clienteBanco.setEmail(clienteDadosAtualizados.getEmail());
 	}
 
 }

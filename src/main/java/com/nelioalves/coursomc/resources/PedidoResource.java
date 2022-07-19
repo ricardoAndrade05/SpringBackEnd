@@ -21,11 +21,7 @@ public class PedidoResource {
 	public ResponseEntity<?> find(@PathVariable Integer id ) {
 		Pedido pedido = service.buscar(id);
 		ResponseEntity<Pedido> retorno = ResponseEntity.ok().body(pedido);
-		System.out.println("///////////////////////////////////////////////////////////////////////////////");
-		System.out.println(retorno);
-		System.out.println("///////////////////////////////////////////////////////////////////////////////");
 		return retorno;
-		
 	}
 
 }

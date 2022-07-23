@@ -1,5 +1,7 @@
 package com.nelioalves.coursomc.services;
 
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.SimpleMailMessage;
 
 import com.nelioalves.coursomc.domain.Pedido;
@@ -10,5 +12,7 @@ public interface EmailService {
 	
 	void sendEmail(SimpleMailMessage msg);
 	
+	void sendOrderConfirmationHtmlEmail(Pedido pedido);
 	
+	void sendHtmlEmail(MimeMessage msg);
 }

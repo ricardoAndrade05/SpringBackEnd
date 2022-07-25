@@ -20,6 +20,7 @@ import com.nelioalves.coursomc.domain.PagamentoComCartao;
 import com.nelioalves.coursomc.domain.Pedido;
 import com.nelioalves.coursomc.domain.Produto;
 import com.nelioalves.coursomc.domain.enums.EstadoPagamento;
+import com.nelioalves.coursomc.domain.enums.Perfil;
 import com.nelioalves.coursomc.domain.enums.TipoCliente;
 import com.nelioalves.coursomc.repositories.CategoriaRepository;
 import com.nelioalves.coursomc.repositories.CidadeRepository;
@@ -110,9 +111,17 @@ public class DBService {
 		Cliente cli = new Cliente(null, "Maria Silva", "ricardo_teles_andrade@hotmail.com",
 				"36378912377", TipoCliente.PESSOAFISICA,bCryptPasswordEncoder.encode("123"));
 		cli.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente(null, "Ricardo Teles", "ricardoSpringTeste@gmail.com",
+				"05736810905", TipoCliente.PESSOAFISICA,bCryptPasswordEncoder.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
 
 		Endereco end1 = new Endereco(null, "Rua das flores", "300", "apto 203", "Jardim", "36220634", c1, cli);
 		Endereco end2 = new Endereco(null, "Av.Marcos", "105", "Sala 308", "Centro", "38777012", c2, cli);
+		Endereco end3 = new Endereco(null, "Av.Brasil", "1025", "Sala 88", "Centro", "87020035", c2, cli2);
+		
+		cli.getEnderecos().addAll(Arrays.asList(end1,end2));
+		cli2.getEnderecos().addAll(Arrays.asList(end3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli, end1);
@@ -140,8 +149,8 @@ public class DBService {
 		produtoRepository.saveAll(Arrays.asList(p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
-		clienteRepository.saveAll(Arrays.asList(cli));
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		clienteRepository.saveAll(Arrays.asList(cli,cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2,end3));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));

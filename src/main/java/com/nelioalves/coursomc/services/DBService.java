@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.coursomc.domain.Categoria;
@@ -33,6 +34,8 @@ import com.nelioalves.coursomc.repositories.ProdutoRepository;
 @Service
 public class DBService {
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	CategoriaRepository categoriaRepository;
 	@Autowired
@@ -104,7 +107,8 @@ public class DBService {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-		Cliente cli = new Cliente(null, "Maria Silva", "ricardo_teles_andrade@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli = new Cliente(null, "Maria Silva", "ricardo_teles_andrade@hotmail.com",
+				"36378912377", TipoCliente.PESSOAFISICA,bCryptPasswordEncoder.encode("123"));
 		cli.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Endereco end1 = new Endereco(null, "Rua das flores", "300", "apto 203", "Jardim", "36220634", c1, cli);
@@ -116,8 +120,8 @@ public class DBService {
 
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
-		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"),
-				null);
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,
+				sdf.parse("20/10/2017 00:00"),null);
 		ped2.setPagamento(pagto2);
 		cli.getPedidos().addAll(Arrays.asList(ped1, ped2));
 

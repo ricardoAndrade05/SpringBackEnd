@@ -1,5 +1,7 @@
 package com.nelioalves.coursomc.security;
 
+import static com.nelioalves.coursomc.security.JWTUtil.TIPO_TOKEN;
+
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -33,7 +35,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 		String header = request.getHeader("Authorization");
 
-		if (header != null && header.startsWith(JWTAuthenticationFilter.TIPO_TOKEN)) {
+		if (header != null && header.startsWith(TIPO_TOKEN)) {
 			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
 			if (auth != null) {
 				SecurityContextHolder.getContext().setAuthentication(auth);

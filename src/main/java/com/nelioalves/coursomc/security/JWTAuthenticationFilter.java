@@ -1,5 +1,7 @@
 package com.nelioalves.coursomc.security;
 
+import static com.nelioalves.coursomc.security.JWTUtil.TIPO_TOKEN;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +23,6 @@ import com.nelioalves.coursomc.dto.CredenciaisDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	public static final String TIPO_TOKEN = "Bearer ";
 	private static final String AUTHORIZATION = "Authorization";
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;

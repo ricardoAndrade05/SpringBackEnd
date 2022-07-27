@@ -12,6 +12,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTUtil {
 
+	public static final String TIPO_TOKEN = "Bearer ";
+	
 	@Value("${jwt.secret}")
 	private String secret;
 

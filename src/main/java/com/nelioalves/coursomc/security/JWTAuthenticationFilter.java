@@ -21,6 +21,8 @@ import com.nelioalves.coursomc.dto.CredenciaisDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+	public static final String TIPO_TOKEN = "Bearer ";
+	private static final String AUTHORIZATION = "Authorization";
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
 	
@@ -53,7 +55,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String username = ((UserSS) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
-		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader(AUTHORIZATION, TIPO_TOKEN + token);
 	}
 	
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {

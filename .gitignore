@@ -5,9 +5,8 @@ target/
 !**/src/test/**/target/
 
 ## Properties ##
-/src/main/resources/application-dev
-/src/main/resources/application-prod
-/src/main/resources/application-test
+*.properties
+
 
 ### STS ###
 .apt_generated
@@ -36,3 +35,7 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/application.properties
+src/main/resources/application-prod.properties
+src/main/resources/application-test.properties
+src/main/resources/application-dev.properties

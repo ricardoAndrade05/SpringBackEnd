@@ -13,6 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JWTUtil {
 
 	public static final String TIPO_TOKEN = "Bearer ";
+	public static final String AUTHORIZATION = "Authorization";
 	
 	@Value("${jwt.secret}")
 	private String secret;

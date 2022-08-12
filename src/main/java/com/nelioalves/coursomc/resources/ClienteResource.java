@@ -32,8 +32,14 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id ) {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id ) {
 		Cliente cliente = service.find(id);
+		return ResponseEntity.ok().body(cliente);
+	}
+	
+	@RequestMapping(value ="/email", method = RequestMethod.GET)
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(value="value") String email ) {
+		Cliente cliente = service.findByEmail(email);
 		return ResponseEntity.ok().body(cliente);
 	}
 	

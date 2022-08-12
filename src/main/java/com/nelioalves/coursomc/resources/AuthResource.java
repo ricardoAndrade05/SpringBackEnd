@@ -1,6 +1,7 @@
 package com.nelioalves.coursomc.resources;
 
 import static com.nelioalves.coursomc.security.JWTUtil.TIPO_TOKEN;
+import static com.nelioalves.coursomc.security.JWTUtil.AUTHORIZATION;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -32,7 +33,8 @@ public class AuthResource {
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
 		UserSS user = UserService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
-		response.addHeader("Authorization", TIPO_TOKEN + token);
+		response.addHeader(AUTHORIZATION, TIPO_TOKEN + token);
+		response.addHeader("access-control-expose-headers", AUTHORIZATION);
 		return ResponseEntity.noContent().build();
 	}
 	

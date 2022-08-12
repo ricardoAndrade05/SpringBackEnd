@@ -1,6 +1,7 @@
 package com.nelioalves.coursomc.security;
 
 import static com.nelioalves.coursomc.security.JWTUtil.TIPO_TOKEN;
+import static com.nelioalves.coursomc.security.JWTUtil.AUTHORIZATION;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import com.nelioalves.coursomc.dto.CredenciaisDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private static final String AUTHORIZATION = "Authorization";
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
 	
@@ -57,6 +57,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = ((UserSS) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		response.addHeader(AUTHORIZATION, TIPO_TOKEN + token);
+		response.addHeader("access-control-expose-headers", AUTHORIZATION);
 	}
 	
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {

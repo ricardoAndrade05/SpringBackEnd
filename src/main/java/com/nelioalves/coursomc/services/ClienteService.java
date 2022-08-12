@@ -69,6 +69,21 @@ public class ClienteService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 	
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
+		Cliente cliente = repo.findByEmail(email);
+		if(cliente == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return cliente;
+	}
+	
+	
 	@Transactional
 	public Cliente insert(Cliente cliente) {
 		cliente.setId(null);
@@ -124,11 +139,6 @@ public class ClienteService {
 		
 	}
 	
-	public Cliente findByEmail(String email) {
-		Cliente cliente = repo.findByEmail(email);
-		return cliente;
-	}
-
 	private void updateData(Cliente clienteBanco, Cliente clienteDadosAtualizados) {
 		clienteBanco.setNome(clienteDadosAtualizados.getNome());
 		clienteBanco.setEmail(clienteDadosAtualizados.getEmail());
